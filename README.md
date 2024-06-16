@@ -1,3 +1,7 @@
+# Start JSON-Server
+
+to start JSON-Server we need to run this command `npm exec json-server db.json`
+
 # AngularTasksAssignment
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.

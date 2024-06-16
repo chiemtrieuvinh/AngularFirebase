@@ -1,0 +1,35 @@
+p {
+    font-family: Lato;
+  }
+  
+  #root {
+    padding: 30px;
+  }
+  .register-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    svg {
+        width: 120px;
+        height: 60px;
+        margin-right:15px;
+    }
+  }
+  .register-form {
+    max-width: 500px;
+    margin: auto;
+  }
+
+  .card {
+    width: 500px;
+    max-width: 500px;
+  }
+  
+  .flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0
+}

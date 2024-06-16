@@ -1,0 +1,32 @@
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-wrapper {
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    margin: 0; 
+    .nav-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        svg {
+            width: 120px;
+            height: 60px;
+            margin-right: 25px;
+        }
+        a {
+            font-size: 1rem;
+            font-weight:500;
+            color: #000;
+            margin-right: 15px;
+        }
+    }
+}
