@@ -1,1 +1,30 @@
-<p>task-list works!</p>
+<div class="mat-elevation-z8">
+  <table id="tasks">
+    <thead>
+      <tr>
+        <th class="cell-overflow id">Id</th>
+        <th class="cell-overflow title">Title</th>
+        <th class="cell-overflow description">Description</th>
+        <th class="cell-overflow date">Created Date</th>
+        <th class="cell-overflow status">Status</th>
+        <th class="cell-overflow priority">Priority</th>
+        <th class="cell-overflow actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of dataSource">
+        <td class="cell-overflow id">{{ row.id }}</td>
+        <td class="cell-overflow title">{{ row.title }}</td>
+        <td class="cell-overflow description">{{ row.description }}</td>
+        <td class="cell-overflow date">{{ row.createdDate }}</td>
+        <td class="cell-overflow status">{{ row.status }}</td>
+        <td class="cell-overflow priority">{{ row.priority }}</td>
+        <td class="cell-overflow actions">
+          <button class="btn btn-info mr-2">View</button>
+          <button class="btn btn-warning mr-2">Update</button
+          ><button class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

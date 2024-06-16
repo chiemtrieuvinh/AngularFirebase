@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { TaskService } from '../../services/TaskService/task.service';
-
+import { TaskListComponent } from './task-list/task-list.component';
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [],
+  imports: [TaskListComponent],
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss',
 })

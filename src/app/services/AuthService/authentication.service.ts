@@ -1,4 +1,4 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -11,7 +11,7 @@ export class AuthenticationService {
   router: Router = inject(Router);
   isAuthorized: boolean = false;
   private AuthenticatedSubject: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+    new BehaviorSubject<boolean>(true);
   public showNavbar = this.AuthenticatedSubject.asObservable();
   constructor() {}
 
