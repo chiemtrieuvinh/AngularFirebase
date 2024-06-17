@@ -1,15 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/TaskService/task.service';
-
+import { Task } from '../../../interfaces/task';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { TaskItemComponent } from '../task-item/task-item.component';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TaskItemComponent],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
 })
 export class TaskListComponent {
+  router: Router = inject(Router);
   taskService: TaskService = inject(TaskService);
 
   displayedColumns: string[] = [
@@ -21,36 +25,20 @@ export class TaskListComponent {
     'Priority',
     'Actions',
   ];
-  dataSource: PeriodicElement[] = [];
-  constructor() {}
+  dataSource: Observable<Task[]>;
+  constructor() {
+    this.dataSource = this.taskService.taskList
+  }
   ngOnInit() {
-    this.fetchAll();
+    this.taskService.getAllTasks()
   }
-  fetchAll() {
-    this.taskService.getAllTasks().subscribe({
-      next: (data) => {
-        this.dataSource = [];
-        data.forEach((item: any) => {
-          let task = item.payload.doc.data();
-          this.dataSource.push({
-            id: item.payload.doc.id,
-            title: task.title,
-            description: task.description,
-            createdDate: task.createdDate,
-            status: task.status,
-            priority: task.priority,
-          });
-        });
-      },
-    });
-  }
-}
 
-export interface PeriodicElement {
-  id: string;
-  title: string;
-  description: string;
-  createdDate: string;
-  status: string;
-  priority: number;
+  navigateToUpdate(task:Task) {
+    this.router.navigate([`/tasks/${task.id}/update`])
+  }
+
+  onDelete(id:string) {
+    this.taskService.deleteTask(id)
+  }
+
 }

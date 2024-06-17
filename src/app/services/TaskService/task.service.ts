@@ -1,32 +1,54 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Task } from '../../interfaces/task';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
   firestore: AngularFirestore = inject(AngularFirestore);
+  private TaskSubject: BehaviorSubject<Task[]> =
+    new BehaviorSubject<Task[]>([]);
+  public taskList = this.TaskSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
 
-  // getAllTasks
   getAllTasks() {
-    return this.firestore.collection('/Tasks').snapshotChanges();
+    this.firestore.collection('/Tasks').snapshotChanges().subscribe({
+      next: (data) => {
+        let taskList: Task[] = data.map((item: any) => {
+          let task = item.payload.doc.data();
+          return {
+            id: item.payload.doc.id,
+            ...task
+          }
+        });
+        this.TaskSubject.next(taskList)
+      },
+    });
   }
-  // add Task
-  addTask(task: any) {
-    task.id = this.firestore.createId();
+  
+  getTaskDetail(id: string) {
+    return this.firestore.collection('Tasks').doc(id).get()
+  }
+
+  addTask(task: Task) {
     return this.firestore.collection('/Tasks').add(task);
   }
-  // update Task
-  updateTask(task: any) {
-    // task.id = this.firestore.createId()
-    // return this.firestore.collection(`/Tasks/${task.id}`)
-    this.deleteTask(task);
-    this.addTask(task);
+  
+  updateTask(task: Task) {
+    const updatePayload = {
+      title: task.title,
+      description: task.description,
+      createdDate: task.createdDate,
+      status: task.status,
+      priority: task.priority
+    }
+    return this.firestore.collection('/Tasks').doc(task?.id).update(updatePayload)
   }
-  // delete Task
-  deleteTask(task: any) {
-    return this.firestore.doc(`/Tasks/${task.id}`).delete();
+  
+  deleteTask(id: string) {
+    return this.firestore.doc(`/Tasks/${id}`).delete();
   }
 }

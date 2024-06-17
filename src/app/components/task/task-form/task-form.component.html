@@ -1,1 +1,39 @@
-<p>task-form works!</p>
+<div class="task-form mb-5">
+    <mat-card class="card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
+                {{isUpdate ? 'Update': 'Create'}} Form
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" formControlName="title" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" formControlName="description" class="form-control" />
+                </div>
+
+                <div class="form-group flex-wrapper">
+                    <label>Status</label>
+                    <input type="checkbox" formControlName="status" class="form-control checkbox" />
+                </div>
+
+                <div class="form-group ">
+                    <label class="align-center">Priority</label>
+                    <select formControlName="priority" id="priority" class="form-control select">
+                        <option [value]="0">Low</option>
+                        <option [value]="1">Medium</option>
+                        <option [value]="2">High</option>
+                    </select>
+                </div>
+                <div class="form-group flex-wrapper">
+                    <button type="submit" class="btn btn-primary">{{isUpdate ? 'Update': 'Create'}}</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

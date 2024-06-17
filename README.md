@@ -1,3 +1,9 @@
+# Before we start
+
+After clone source code from github, should use `npm install --force` to install packages without any security from windows, if not it might cause issues while installing package.
+
+Need to install Angular CLI to your computer by this command `npm install -g @angular/cli`
+
 # Start JSON-Server
 
 to start JSON-Server we need to run this command `npm exec json-server db.json`

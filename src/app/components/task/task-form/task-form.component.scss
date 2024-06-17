@@ -1,0 +1,37 @@
+p {
+    font-family: Lato;
+}
+
+#root {
+    padding: 30px;
+}
+
+.task-form {
+    max-width: 500px;
+    margin: auto;
+}
+
+.card {
+    width: 500px;
+    max-width: 500px;
+}
+
+.flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0
+}
+
+.flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.checkbox {
+    width: 16px;
+    height: 16px;
+    margin-left:16px;
+}

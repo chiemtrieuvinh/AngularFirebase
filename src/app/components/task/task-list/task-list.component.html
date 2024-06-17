@@ -12,19 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of dataSource">
-        <td class="cell-overflow id">{{ row.id }}</td>
-        <td class="cell-overflow title">{{ row.title }}</td>
-        <td class="cell-overflow description">{{ row.description }}</td>
-        <td class="cell-overflow date">{{ row.createdDate }}</td>
-        <td class="cell-overflow status">{{ row.status }}</td>
-        <td class="cell-overflow priority">{{ row.priority }}</td>
-        <td class="cell-overflow actions">
-          <button class="btn btn-info mr-2">View</button>
-          <button class="btn btn-warning mr-2">Update</button
-          ><button class="btn btn-danger">Delete</button>
-        </td>
-      </tr>
+      <tr app-task-item *ngFor="let data of dataSource | async" [task]="data"></tr>
     </tbody>
   </table>
 </div>

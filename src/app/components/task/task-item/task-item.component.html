@@ -1,1 +1,11 @@
-<p>task-item works!</p>
+    <td class="cell-overflow id">{{ task.id }}</td>
+    <td class="cell-overflow title">{{ task.title }}</td>
+    <td class="cell-overflow description">{{ task.description }}</td>
+    <td class="cell-overflow date">{{ task.createdDate }}</td>
+    <td class="cell-overflow status">{{ task.status }}</td>
+    <td class="cell-overflow priority">{{ task.priority }}</td>
+    <td class="cell-overflow actions">
+      <button class="btn btn-info mr-2" (click)="navigateToDetailPage(task)">View</button>
+      <button class="btn btn-warning mr-2" (click)="navigateToUpdate(task)">Update</button
+      ><button class="btn btn-danger" (click)="onDelete(task.id ?? '')">Delete</button>
+    </td>

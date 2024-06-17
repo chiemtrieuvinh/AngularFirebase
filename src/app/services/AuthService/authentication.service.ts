@@ -16,7 +16,6 @@ export class AuthenticationService {
   constructor() {}
 
   getAuthorization() {
-    console.log(this.isAuthorized);
     return this.isAuthorized;
   }
 
