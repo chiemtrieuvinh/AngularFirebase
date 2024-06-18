@@ -47,6 +47,8 @@ export class TaskFormComponent {
     description: new FormControl(''),
     status: new FormControl(false),
     priority: new FormControl(0),
+    dueDate: new FormControl(new Date()),
+    assignees: new FormControl([])
   });
   formBuilder: FormBuilder = inject(FormBuilder);
   submitted = false;
@@ -90,18 +92,19 @@ export class TaskFormComponent {
       if (this.form.invalid) {
         return;
       }
-      const date = new Date();
       const submitTitle = this.form.value.title ?? '';
       const submitDescription = this.form.value.description ?? '';
       const submitStatus = this.form.value.status ?? false;
       const submitPriority = this.form.value.priority ?? 0;
-      const submitCreatedDate = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
+      const submitDueDate = String(this.form.value.dueDate) ?? '';
+      const submitAssignees = this.form.value.assignees ?? [];
       const params = {
         title: submitTitle,
         description: submitDescription,
-        createdDate: submitCreatedDate,
+        dueDate: submitDueDate,
         status: submitStatus,
         priority: submitPriority,
+        assignees: submitAssignees
       };
       if (this.isUpdate) {
         await this.taskService.updateTask({

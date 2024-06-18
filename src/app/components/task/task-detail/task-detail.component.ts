@@ -19,9 +19,10 @@ export class TaskDetailComponent {
   taskDetail: Task = {
     title: '',
     description: '',
-    createdDate: '',
+    dueDate: '',
     status: false,
     priority: 0,
+    assignees: []
   };
   get currentTaskId() {
     return this.activatedRoute.snapshot.params['id'];

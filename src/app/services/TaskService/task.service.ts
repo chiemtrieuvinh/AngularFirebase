@@ -41,9 +41,10 @@ export class TaskService {
     const updatePayload = {
       title: task.title,
       description: task.description,
-      createdDate: task.createdDate,
+      createdDate: task.dueDate,
       status: task.status,
-      priority: task.priority
+      priority: task.priority,
+      assignees: task.assignees
     }
     return this.firestore.collection('/Tasks').doc(task?.id).update(updatePayload)
   }

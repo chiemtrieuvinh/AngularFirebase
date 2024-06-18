@@ -30,8 +30,32 @@ p {
     align-items: center;
     justify-content: flex-start;
 }
+
 .checkbox {
     width: 16px;
     height: 16px;
-    margin-left:16px;
+    margin-left: 16px;
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+    background-color: transparent
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: white !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+    background-color: transparent !important;
+}
+
+:host ::ng-deep .mat-form-field-flex {
+    background: rgb(245, 245, 245);
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: white;
+    border-radius: 5px;
 }

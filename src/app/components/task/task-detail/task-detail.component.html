@@ -6,7 +6,7 @@
   />
   <div class="card-body">
     <h1 class="card-title">{{ taskDetail.title }}</h1>
-    <p class="card-text">{{ taskDetail.createdDate }}</p>
+    <p class="card-text">{{ taskDetail.dueDate }}</p>
     <p class="card-text">
       <small class="text-muted">{{ taskDetail.description }}</small>
     </p>
@@ -15,6 +15,9 @@
     </p>
     <p class="card-text">
       <small class="text-muted">{{ taskDetail.priority }}</small>
+    </p>
+    <p class="card-text">
+      <small class="text-muted">{{ taskDetail.assignees }}</small>
     </p>
   </div>
 </div>

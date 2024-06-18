@@ -1,117 +1,64 @@
 <div class="task-form mb-5">
   <mat-card class="card" appearance="outlined">
-    <mat-card-header>
+    
+    <mat-card-header class="mb-3">
       <mat-card-title>
         {{ isUpdate ? "Update" : "Create" }} Form
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>Title</label>
-          <input type="text" formControlName="title" class="form-control" />
+        <div>
+          <mat-form-field appearance="outline" >
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Please enter title " formControlName="title"/>
+          </mat-form-field>
         </div>
-
-        <div class="form-group">
-          <label>Description</label>
-          <input
-            type="text"
-            formControlName="description"
-            class="form-control"
-          />
+        <div>
+          <mat-form-field appearance="outline" >
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Ex. Write something here !" formControlName="description"></textarea>
+          </mat-form-field>
         </div>
-
-        <div class="form-group flex-wrapper">
-          <label>Status</label>
-          <input
-            type="checkbox"
-            formControlName="status"
-            class="form-control checkbox"
-          />
+        <div>
+          <mat-form-field appearance="outline" >
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="createdDate"/>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
-
-        <div class="form-group">
-          <label class="align-center">Priority</label>
-          <select
-            formControlName="priority"
-            id="priority"
-            class="form-control select"
-          >
-            <option [value]="0">Low</option>
-            <option [value]="1">Medium</option>
-            <option [value]="2">High</option>
-          </select>
+        <div>
+          <mat-form-field appearance="outline" class="mr-3" >
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              @for (food of foods; track food) {
+              <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="form-group flex-wrapper">
-          <button type="submit" class="btn btn-primary">
-            {{ isUpdate ? "Update" : "Create" }}
-          </button>
+        <div>
+          <mat-form-field appearance="outline" class="mr-3" >
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+              @for (food of foods; track food) {
+              <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<div class="task-form mb-5">
-  <mat-card class="card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>
-        {{ isUpdate ? "Update" : "Create" }} Form
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field class="input-search">
-          <mat-label>Title</mat-label>
-          <input matInput placeholder="Please enter title " />
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <mat-label>Description</mat-label>
-          <textarea
-            matInput
-            placeholder="Ex. Write something here !"
-          ></textarea>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Choose a date</mat-label>
-          <input matInput [matDatepicker]="picker" />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Assignees</mat-label>
-          <mat-select [formControl]="toppings" multiple>
-            @for (topping of toppingList; track topping) {
-            <mat-option [value]="topping">{{ topping }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="mr-3">
-          <mat-label>Status</mat-label>
-          <mat-select>
-            @for (food of foods; track food) {
-            <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="mr-3">
-          <mat-label>Priority</mat-label>
-          <mat-select>
-            @for (food of foods; track food) {
-            <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-
+        <div>
+          <mat-form-field appearance="outline" >
+            <mat-label>Assignees</mat-label>
+            <mat-select [formControl]="toppings" multiple formControlName="assignees">
+              @for (topping of toppingList; track topping) {
+              <mat-option [value]="topping">{{ topping }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div class="form-group flex-wrapper">
           <button type="submit" class="btn btn-primary">
             {{ isUpdate ? "Update" : "Create" }}
