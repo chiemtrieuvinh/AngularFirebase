@@ -20,25 +20,25 @@ export class TaskListComponent {
     'Id',
     'Title',
     'Description',
-    'Created Date',
+    'Due Date',
     'Status',
     'Priority',
+    'Assignees',
     'Actions',
   ];
   dataSource: Observable<Task[]>;
   constructor() {
-    this.dataSource = this.taskService.taskList
+    this.dataSource = this.taskService.taskList;
   }
   ngOnInit() {
-    this.taskService.getAllTasks()
+    this.taskService.getAllTasks();
   }
 
-  navigateToUpdate(task:Task) {
-    this.router.navigate([`/tasks/${task.id}/update`])
+  navigateToUpdate(task: Task) {
+    this.router.navigate([`/tasks/${task.id}/update`]);
   }
 
-  onDelete(id:string) {
-    this.taskService.deleteTask(id)
+  onDelete(id: string) {
+    this.taskService.deleteTask(id);
   }
-
 }

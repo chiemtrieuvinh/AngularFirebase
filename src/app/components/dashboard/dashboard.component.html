@@ -1,4 +1,4 @@
-<div class="left-side">
+<div class="jumbotron">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 982 239"
@@ -44,13 +44,33 @@
       <clipPath id="a"><path fill="#fff" d="M0 0h982v239H0z" /></clipPath>
     </defs>
   </svg>
-  <h1>Dashboard</h1>
-  <a [routerLink]="['/dashboard']">Dashboard</a>
-  <a [routerLink]="['/tasks']">Tasks</a>
+  <h1 class="display-4">Hello, Welcome to Dashboard !</h1>
+  <i class="lead">
+    Lorem iisum dolor sit amet, consectetur adipiscing elit. Pellentesque quis
+    luctus mauris. Sed elementum pretium elit, nec porta nisl consectetur eget.
+    Vestibulum consequat, nunc non viverra feugiat, metus ex pharetra dolor, at
+    sagittis metus velit at massa. Donec ac orci ac metus luctus faucibus ut a
+    sem. Suspendisse commodo, neque gravida accumsan gravida, libero lectus
+    hendrerit ipsum, ut interdum turpis risus eget elit. In at lectus feugiat,
+    tincidunt mi id, pulvinar diam. Ut sit amet tincidunt magna, non condimentum
+    nibh.
+  </i>
+  <hr class="my-4" />
   <p>
-    Use this button when reloading page and missing navbar
-    <button class="btn btn-primary" (click)="logout()">Logout</button>
+    Aliquam sollicitudin luctus dictum. Nam sollicitudin ex mauris, blandit
+    sagittis lectus feugiat non. Nullam justo dui, gravida et elit vel, ornare
+    faucibus est. Phasellus sit amet finibus tellus, ac vulputate augue. Nullam
+    consectetur nisi augue, et varius est dignissim non. Fusce blandit ante
+    purus, vitae porttitor dui condimentum eget. Nam est eros, euismod sit amet
+    auctor vitae, molestie nec odio.
   </p>
-
-  <p>Congratulations! Your app is running. 🎉</p>
+  <p class="lead">
+    <a
+      class="btn btn-primary btn-lg"
+      href="#"
+      role="button"
+      (click)="navigate()"
+      >Learn more</a
+    >
+  </p>
 </div>

@@ -1,1 +1,20 @@
-<p>task-detail works!</p>
+<div class="card mb-3">
+  <img
+    class="card-img-top"
+    src="https://placehold.co/1200x200"
+    alt="Card image cap"
+  />
+  <div class="card-body">
+    <h1 class="card-title">{{ taskDetail.title }}</h1>
+    <p class="card-text">{{ taskDetail.createdDate }}</p>
+    <p class="card-text">
+      <small class="text-muted">{{ taskDetail.description }}</small>
+    </p>
+    <p class="card-text">
+      <small class="text-muted">{{ taskDetail.status }}</small>
+    </p>
+    <p class="card-text">
+      <small class="text-muted">{{ taskDetail.priority }}</small>
+    </p>
+  </div>
+</div>

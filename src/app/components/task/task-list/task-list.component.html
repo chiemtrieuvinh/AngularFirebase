@@ -1,18 +1,23 @@
 <div class="mat-elevation-z8">
-  <table id="tasks">
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th class="cell-overflow id">Id</th>
-        <th class="cell-overflow title">Title</th>
-        <th class="cell-overflow description">Description</th>
-        <th class="cell-overflow date">Created Date</th>
-        <th class="cell-overflow status">Status</th>
-        <th class="cell-overflow priority">Priority</th>
-        <th class="cell-overflow actions">Actions</th>
+        <th scope="col" class="cell-overflow id">Id</th>
+        <th scope="col" class="cell-overflow title">Title</th>
+        <th scope="col" class="cell-overflow description">Description</th>
+        <th scope="col" class="cell-overflow date">Created Date</th>
+        <th scope="col" class="cell-overflow status">Status</th>
+        <th scope="col" class="cell-overflow priority">Priority</th>
+        <th scope="col" class="cell-overflow actions">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr app-task-item *ngFor="let data of dataSource | async" [task]="data"></tr>
+      <tr
+        scope="row"
+        app-task-item
+        *ngFor="let data of dataSource | async"
+        [task]="data"
+      ></tr>
     </tbody>
   </table>
 </div>

@@ -10,13 +10,33 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import { TaskService } from '../../../services/TaskService/task.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
+interface Food {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatCardModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    MatCardModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+  ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.scss'
+  styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent {
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -30,23 +50,34 @@ export class TaskFormComponent {
   });
   formBuilder: FormBuilder = inject(FormBuilder);
   submitted = false;
-  isUpdate = false
-
-  constructor() {
-
-  }
+  isUpdate = false;
+  foods: Food[] = [
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
+  ];
+  toppings = new FormControl('');
+  toppingList: string[] = [
+    'Extra cheese',
+    'Mushroom',
+    'Onion',
+    'Pepperoni',
+    'Sausage',
+    'Tomato',
+  ];
+  constructor() {}
   ngOnInit() {
     if (this.currentTaskId) {
-      this.isUpdate = true
+      this.isUpdate = true;
       this.taskService.getTaskDetail(this.currentTaskId).subscribe((res) => {
-        this.form.patchValue(res?.data() ?? {})
-      })
+        this.form.patchValue(res?.data() ?? {});
+      });
     } else {
-      this.isUpdate = false
+      this.isUpdate = false;
     }
   }
   get currentTaskId() {
-    return this.activatedRoute.snapshot.params['id']
+    return this.activatedRoute.snapshot.params['id'];
   }
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
@@ -59,7 +90,7 @@ export class TaskFormComponent {
       if (this.form.invalid) {
         return;
       }
-      const date = new Date()
+      const date = new Date();
       const submitTitle = this.form.value.title ?? '';
       const submitDescription = this.form.value.description ?? '';
       const submitStatus = this.form.value.status ?? false;
@@ -71,23 +102,23 @@ export class TaskFormComponent {
         createdDate: submitCreatedDate,
         status: submitStatus,
         priority: submitPriority,
-      }
+      };
       if (this.isUpdate) {
         await this.taskService.updateTask({
           ...params,
-          id: this.currentTaskId
+          id: this.currentTaskId,
         });
       } else {
         await this.taskService.addTask(params);
       }
-      this.onReset()
-      this.router.navigate(['/tasks'])
+      this.onReset();
+      this.router.navigate(['/tasks']);
     } catch (err: any) {
-      alert(err.message)
+      alert(err.message);
     }
   }
 
   onReset(): void {
-    this.form.reset()
+    this.form.reset();
   }
 }

@@ -1,1 +1,15 @@
-<p>task-search works!</p>
+<form class="form">
+  <mat-form-field class="mr-3">
+    <mat-label>Filter status</mat-label>
+    <mat-select>
+      @for (food of foods; track food) {
+      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="input-search">
+    <mat-label>Search title / desciption</mat-label>
+    <input type="tel" matInput placeholder="Please enter text " />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</form>

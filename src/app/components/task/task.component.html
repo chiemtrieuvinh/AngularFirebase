@@ -1,2 +1,10 @@
-<button class="btn btn-info mb-3 font-weight-bold" (click)="handleNavigation()">Create new task</button>
+<div class="toolbar-wrapper">
+  <button
+    class="btn btn-info mb-3 font-weight-bold"
+    (click)="handleNavigation()"
+  >
+    Create new task
+  </button>
+  <app-task-search></app-task-search>
+</div>
 <app-task-list></app-task-list>
