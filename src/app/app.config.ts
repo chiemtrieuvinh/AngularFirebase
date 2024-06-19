@@ -10,6 +10,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +31,9 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideHttpClient(),
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, provideAnimationsAsync(),
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    provideAnimationsAsync(),
+    provideToastr(),
+    provideAnimations(),
   ],
 };

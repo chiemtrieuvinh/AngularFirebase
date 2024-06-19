@@ -1,15 +1,23 @@
-<form class="form">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="input-search mr-3">
+    <mat-label>Search title / desciption</mat-label>
+    <input
+      type="tel"
+      matInput
+      placeholder="Please enter text "
+      formControlName="search"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
   <mat-form-field appearance="outline" class="mr-3">
     <mat-label>Filter status</mat-label>
-    <mat-select>
-      @for (food of foods; track food) {
-      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+    <mat-select formControlName="filter">
+      @for (status of statusOptions; track status) {
+      <mat-option [value]="status.value">{{ status.viewValue }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" class="input-search">
-    <mat-label>Search title / desciption</mat-label>
-    <input type="tel" matInput placeholder="Please enter text " />
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+  <button type="submit" class="btn btn-info mb-3 font-weight-bold btn-lg">
+    Search
+  </button>
 </form>

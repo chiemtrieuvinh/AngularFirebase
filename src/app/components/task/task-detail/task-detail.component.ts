@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { TaskService } from '../../../services/TaskService/task.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task } from '../../../interfaces/task';
+import {
+  MappedPriority,
+  MappedStatus,
+  PriorityValue,
+  StatusValue,
+} from '../../../interfaces/task';
 
 @Component({
   selector: 'app-task-detail',
@@ -16,20 +21,29 @@ export class TaskDetailComponent {
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   taskService: TaskService = inject(TaskService);
   router: Router = inject(Router);
-  taskDetail: Task = {
+
+  taskDetail = {
     title: '',
     description: '',
     dueDate: '',
-    status: false,
-    priority: 0,
-    assignees: []
+    status: MappedStatus[StatusValue.NEW],
+    priority: MappedPriority[PriorityValue.LOW],
+    assignees: [],
   };
+  convertedStatus!: string;
+  convertedPriority!: string;
+  convertedTime!: string;
   get currentTaskId() {
     return this.activatedRoute.snapshot.params['id'];
   }
   ngOnInit() {
     this.taskService.getTaskDetail(this.currentTaskId).subscribe((res: any) => {
-      this.taskDetail = res.data();
+      const response = res.data();
+      this.taskDetail = response;
+      this.convertedStatus = MappedStatus[response.status];
+      this.convertedPriority = MappedPriority[response.priority];
+      const time = new Date(response.dueDate);
+      this.convertedTime = `${time.getDay()}-${time.getMonth()}-${time.getFullYear()}`;
     });
   }
 

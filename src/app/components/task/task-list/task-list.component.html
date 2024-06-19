@@ -7,7 +7,19 @@
         <th scope="col" class="cell-overflow description">Description</th>
         <th scope="col" class="cell-overflow date">Due Date</th>
         <th scope="col" class="cell-overflow status">Status</th>
-        <th scope="col" class="cell-overflow priority">Priority</th>
+        <th
+          scope="col"
+          class="cell-overflow priority custom-icon"
+          (click)="onHandleSort(currentSort)"
+        >
+          Priority @if (currentSort === 'asc') {
+          <mat-icon class="w-12 h-12">arrow_downward</mat-icon>
+
+          } @else {
+          <mat-icon class="w-12 h-12">arrow_upward</mat-icon>
+
+          }
+        </th>
         <th scope="col" class="cell-overflow actions">Assignees</th>
         <th scope="col" class="cell-overflow actions">Actions</th>
       </tr>

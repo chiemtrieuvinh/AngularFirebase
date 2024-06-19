@@ -16,11 +16,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  StatusOptions,
+  Option,
+  PriorityOptions,
+  StatusValue,
+  PriorityValue,
+} from '../../../interfaces/task';
+import { ToastrService } from 'ngx-toastr';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-task-form',
   standalone: true,
@@ -40,24 +44,22 @@ interface Food {
 })
 export class TaskFormComponent {
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  toastr: ToastrService = inject(ToastrService);
   router: Router = inject(Router);
   taskService: TaskService = inject(TaskService);
   form = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
-    status: new FormControl(false),
+    status: new FormControl('new'),
     priority: new FormControl(0),
     dueDate: new FormControl(new Date()),
-    assignees: new FormControl([])
+    assignees: new FormControl([]),
   });
   formBuilder: FormBuilder = inject(FormBuilder);
   submitted = false;
   isUpdate = false;
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
+  statusOptions: Option[] = StatusOptions;
+  priorityOptions: Option[] = PriorityOptions;
   toppings = new FormControl('');
   toppingList: string[] = [
     'Extra cheese',
@@ -78,6 +80,7 @@ export class TaskFormComponent {
       this.isUpdate = false;
     }
   }
+
   get currentTaskId() {
     return this.activatedRoute.snapshot.params['id'];
   }
@@ -94,8 +97,8 @@ export class TaskFormComponent {
       }
       const submitTitle = this.form.value.title ?? '';
       const submitDescription = this.form.value.description ?? '';
-      const submitStatus = this.form.value.status ?? false;
-      const submitPriority = this.form.value.priority ?? 0;
+      const submitStatus = this.form.value.status ?? StatusValue.ALL;
+      const submitPriority = this.form.value.priority ?? PriorityValue.LOW;
       const submitDueDate = String(this.form.value.dueDate) ?? '';
       const submitAssignees = this.form.value.assignees ?? [];
       const params = {
@@ -104,20 +107,22 @@ export class TaskFormComponent {
         dueDate: submitDueDate,
         status: submitStatus,
         priority: submitPriority,
-        assignees: submitAssignees
+        assignees: submitAssignees,
       };
       if (this.isUpdate) {
         await this.taskService.updateTask({
           ...params,
           id: this.currentTaskId,
         });
+        this.toastr.success('Updated successfully !');
       } else {
         await this.taskService.addTask(params);
+        this.toastr.success('Created successfully !');
       }
       this.onReset();
       this.router.navigate(['/tasks']);
     } catch (err: any) {
-      alert(err.message);
+      this.toastr.error(err.message);
     }
   }
 

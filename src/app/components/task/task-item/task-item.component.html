@@ -1,9 +1,9 @@
 <td class="cell-overflow id">{{ task.id }}</td>
 <td class="cell-overflow title">{{ task.title }}</td>
 <td class="cell-overflow description">{{ task.description }}</td>
-<td class="cell-overflow date">{{ task.dueDate }}</td>
-<td class="cell-overflow status">{{ task.status }}</td>
-<td class="cell-overflow priority">{{ task.priority }}</td>
+<td class="cell-overflow date">{{ convertedTime }}</td>
+<td class="cell-overflow status">{{ convertedStatus }}</td>
+<td class="cell-overflow priority">{{ convertedPriority }}</td>
 <td class="cell-overflow priority">{{ task.assignees }}</td>
 <td class="cell-overflow actions">
   <mat-icon
