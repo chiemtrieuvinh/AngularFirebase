@@ -53,7 +53,9 @@
       <a [routerLink]="['/tasks']">Tasks</a>
       <a [routerLink]="['/profile']">Profile</a>
     </div>
-    <div>
+    <div class="right-wrapper">
+      <mat-icon matSuffix class="text-primary mr-2">add_alert</mat-icon>
+
       <button mat-button (click)="logout()">Logout</button>
     </div>
   </div>
