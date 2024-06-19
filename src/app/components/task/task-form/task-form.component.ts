@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { TaskService } from '../../../services/TaskService/task.service';
+import { AuthenticationService } from '../../../services/AuthService/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -24,6 +25,8 @@ import {
   PriorityValue,
 } from '../../../interfaces/task';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../../../interfaces/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-form',
@@ -47,6 +50,7 @@ export class TaskFormComponent {
   toastr: ToastrService = inject(ToastrService);
   router: Router = inject(Router);
   taskService: TaskService = inject(TaskService);
+  authService: AuthenticationService = inject(AuthenticationService);
   form = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
@@ -60,27 +64,34 @@ export class TaskFormComponent {
   isUpdate = false;
   statusOptions: Option[] = StatusOptions;
   priorityOptions: Option[] = PriorityOptions;
-  toppings = new FormControl('');
-  toppingList: string[] = [
-    'Extra cheese',
-    'Mushroom',
-    'Onion',
-    'Pepperoni',
-    'Sausage',
-    'Tomato',
-  ];
-  constructor() {}
+  userList: Observable<User[]>;
+  todayDate = new Date()
+  constructor() {
+    this.userList = this.authService.users
+  }
   ngOnInit() {
+    this.fetchAllUsers();
     if (this.currentTaskId) {
       this.isUpdate = true;
-      this.taskService.getTaskDetail(this.currentTaskId).subscribe((res) => {
-        this.form.patchValue(res?.data() ?? {});
+      this.taskService.getTaskDetail(this.currentTaskId).subscribe((res:any) => {
+        const response = res.data()
+        this.form.patchValue({
+          ...response,
+          dueDate: new Date(response.dueDate)
+        } ?? {});
       });
     } else {
       this.isUpdate = false;
     }
   }
 
+  async fetchAllUsers() {
+    try {
+      await this.authService.getAllUsers()
+    } catch (err:any) {
+      this.toastr.error(err.message);
+    }
+  }
   get currentTaskId() {
     return this.activatedRoute.snapshot.params['id'];
   }

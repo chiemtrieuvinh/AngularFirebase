@@ -34,6 +34,7 @@
               matInput
               [matDatepicker]="picker"
               formControlName="dueDate"
+              [min]="todayDate"
             />
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle
@@ -71,12 +72,11 @@
           <mat-form-field appearance="outline">
             <mat-label>Assignees</mat-label>
             <mat-select
-              [formControl]="toppings"
               multiple
               formControlName="assignees"
             >
-              @for (topping of toppingList; track topping) {
-              <mat-option [value]="topping">{{ topping }}</mat-option>
+              @for (user of userList | async; track user) {
+              <mat-option [value]="user.id">{{ user.username }}</mat-option>
               }
             </mat-select>
           </mat-form-field>

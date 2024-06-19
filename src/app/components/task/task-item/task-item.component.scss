@@ -1,6 +1,17 @@
-// td {
-//     text-align: center;
-//     border: 1px solid #ddd;
-//     padding: 8px;
+td {
+    font-weight: 500;
+}
+.custom-icon {
+    .mat-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
 
-// }
+.priority {
+    .priority-wrapper {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+    }
+}

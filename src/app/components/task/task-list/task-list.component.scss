@@ -6,24 +6,6 @@
     
   }
   
-//   #tasks td, #tasks th {
-//     text-align: center;
-//     border: 1px solid #ddd;
-//     padding: 8px;
- 
-//   }
-  
-//   #tasks tr:nth-child(even){background-color: #f2f2f2;}
-  
-//   #tasks tr:hover {background-color: #ddd;}
-  
-//   #tasks th {
-//     padding-top: 12px;
-//     padding-bottom: 12px;
-//     text-align: center;
-//     background-color: #04AA6D;
-//     color: white;
-//   }
 
 .cell-overflow {
     white-space: nowrap;
@@ -46,7 +28,10 @@
     width: 100px
 }
 .priority {
-    width: 100px
+    width: 125px
+}
+.assignees {
+    width: 150px
 }
 .actions {
     width: 150px

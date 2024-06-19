@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthenticationService } from '../../services/AuthService/authentication.service';
 import {
   FormControl,
@@ -23,6 +23,7 @@ export class SignUpComponent {
   auth: AuthenticationService = inject(AuthenticationService);
   form = new FormGroup({
     email: new FormControl(''),
+    username: new FormControl(''),
     password: new FormControl(''),
   });
   formBuilder: FormBuilder = inject(FormBuilder);
@@ -31,6 +32,7 @@ export class SignUpComponent {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: [
         '',
@@ -53,9 +55,16 @@ export class SignUpComponent {
     if (this.form.invalid) {
       return;
     }
+
+    const submitUsername = this.form.value.username ?? '';
     const submitEmail = this.form.value.email ?? '';
     const submitPassword = this.form.value.password ?? '';
-    this.auth.register(submitEmail, submitPassword);
+    const params = {
+      email: submitEmail,
+      username: submitUsername,
+      password: submitPassword
+    }
+    this.auth.register(params);
     console.log(JSON.stringify(this.form.value, null, 2));
   }
 }

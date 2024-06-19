@@ -9,6 +9,7 @@ import {
   PriorityValue,
   StatusValue,
 } from '../../../interfaces/task';
+import moment from 'moment'
 
 @Component({
   selector: 'app-task-detail',
@@ -43,7 +44,7 @@ export class TaskDetailComponent {
       this.convertedStatus = MappedStatus[response.status];
       this.convertedPriority = MappedPriority[response.priority];
       const time = new Date(response.dueDate);
-      this.convertedTime = `${time.getDay()}-${time.getMonth()}-${time.getFullYear()}`;
+      this.convertedTime = moment(time).format('DD-MM-YYYY')
     });
   }
 

@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/AuthService/authentication.service';
+import { Observable } from 'rxjs';
+import { CurrentUser } from '../../interfaces/user';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +14,9 @@ import { AuthenticationService } from '../../services/AuthService/authentication
 })
 export class HeaderComponent {
   auth: AuthenticationService = inject(AuthenticationService);
-  constructor() {}
-
+  userProfile: Observable<CurrentUser> = this.auth.currentUser
+  constructor() {
+  }
   logout() {
     this.auth.logout();
   }

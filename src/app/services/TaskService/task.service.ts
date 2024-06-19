@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SortDirection, StatusValue, Task } from '../../interfaces/task';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 interface ParamsSubject {
   search?: string;
   filter?: string;
@@ -15,18 +15,18 @@ export class TaskService {
   private TaskSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>(
     []
   );
-
+  defaultParams: ParamsSubject = {
+    search: '',
+    filter: StatusValue.ALL,
+    sort: SortDirection.ASC,
+  }
   private ParamsSubject: BehaviorSubject<ParamsSubject> =
-    new BehaviorSubject<ParamsSubject>({
-      search: '',
-      filter: StatusValue.ALL,
-      sort: SortDirection.ASC,
-    });
+    new BehaviorSubject<ParamsSubject>(this.defaultParams);
 
   public taskList = this.TaskSubject.asObservable();
   public fetchParams = this.ParamsSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   onSort(currentSort: SortDirection.ASC | SortDirection.DESC) {
     let newParams = {};
@@ -50,26 +50,7 @@ export class TaskService {
     this.filterStatusAndSearch(newParams);
   }
   async getAllTasks() {
-    await this.filterStatusAndSearch({
-      filter: 'all',
-      search: '',
-      sort: SortDirection.ASC,
-    });
-    // await this.firestore
-    //   .collection('/Tasks')
-    //   .snapshotChanges()
-    //   .subscribe({
-    //     next: (data) => {
-    //       let taskList: Task[] = data.map((item: any) => {
-    //         let task = item.payload.doc.data();
-    //         return {
-    //           id: item.payload.doc.id,
-    //           ...task,
-    //         };
-    //       });
-    //       this.TaskSubject.next(taskList);
-    //     },
-    //   });
+    await this.filterStatusAndSearch(this.defaultParams);
   }
 
   getTaskDetail(id: string) {
@@ -106,59 +87,26 @@ export class TaskService {
   }) {
     this.ParamsSubject.next(params);
     const statusRef = this.firestore.collection('Tasks');
-    // const snapshot = await statusRef.ref
-    //   .where('status', '==', params?.filter)
-    //   .where('title', '==', params?.search)
-    //   .where('description', '==', params?.search ?? '')
-    //   .get();
-    const snapshot = await statusRef.ref.orderBy('priority', params.sort).get();
-    // statusRef.ref.where()
-    // const snapshot = await statusRef.ref
-    // .where(      Filter.or(
-    //   Filter.where('capital', '==', true),
-    //   Filter.where('population', '>=', 1000000)
-    // ))
-
-    // .get();
-    // Filter.or(
-    //   Filter.where('capital', '==', true),
-    //   Filter.where('population', '>=', 1000000)
-    // )
-    const snapshotAll = await statusRef.ref
-      .orderBy('priority', params.sort)
-      .get();
-    if (params?.filter === StatusValue.ALL) {
-      if (params.search) {
-        console.log(params.search, snapshot.docs, 'check search');
-        const result: any = snapshot.docs.map((doc: any) => {
-          return {
-            ...doc.data(),
-            id: doc.id,
-          };
-        });
-        this.TaskSubject.next(result);
-        return;
-      }
-      const result: any = snapshotAll.docs.map((doc: any) => {
-        return {
-          ...doc.data(),
-          id: doc.id,
-        };
-      });
-      this.TaskSubject.next(result);
-      return;
-    } else {
-      if (snapshot.empty) {
-        this.TaskSubject.next([]);
-        throw new Error('Data not found !');
-      }
-      const result: any = snapshot.docs.map((doc: any) => {
-        return {
-          ...doc.data(),
-          id: doc.id,
-        };
-      });
-      this.TaskSubject.next(result);
+    let snapshot = await statusRef.ref.orderBy('priority', params.sort)
+    if (params?.filter !== StatusValue.ALL) {
+      snapshot = snapshot.where('status', '==', params?.filter)
     }
+    if (params?.search) {
+      snapshot = snapshot.where('title', '==', params?.search)
+    }
+
+    const snapshot1 = await snapshot.get()
+
+    if (snapshot1.empty) {
+      this.TaskSubject.next([]);
+      throw new Error('Data not found !');
+    }
+    const result: any = snapshot1.docs.map((doc: any) => {
+      return {
+        ...doc.data(),
+        id: doc.id,
+      };
+    });
+    this.TaskSubject.next(result);
   }
 }

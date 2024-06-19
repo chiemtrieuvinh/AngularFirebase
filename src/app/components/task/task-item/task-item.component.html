@@ -2,26 +2,24 @@
 <td class="cell-overflow title">{{ task.title }}</td>
 <td class="cell-overflow description">{{ task.description }}</td>
 <td class="cell-overflow date">{{ convertedTime }}</td>
-<td class="cell-overflow status">{{ convertedStatus }}</td>
-<td class="cell-overflow priority">{{ convertedPriority }}</td>
-<td class="cell-overflow priority">{{ task.assignees }}</td>
+<td class="cell-overflow status">
+  {{ convertedStatus }}
+</td>
+<td class="cell-overflow priority">
+  <span class="priority-wrapper"> @if (convertedPriority === 'Low') {
+    <mat-icon class="text-info mr-1">low_priority</mat-icon>
+    } @else if(convertedPriority === 'Medium') {
+    <mat-icon class="text-warning mr-1">priority_high</mat-icon>
+    }
+    @else {
+    <mat-icon class="text-danger mr-1">whatshot</mat-icon>
+    } {{ convertedPriority }}
+  </span>
+</td>
+<td class="cell-overflow assignees">{{ convertedAssignees }}</td>
 <td class="cell-overflow actions">
-  <mat-icon
-    matTooltip="Click to view detail"
-    class="text-info mr-2"
-    (click)="navigateToDetailPage(task)"
-    >remove_red_eye</mat-icon
-  >
-  <mat-icon
-    matTooltip="Edit"
-    class="text-warning mr-2"
-    (click)="navigateToUpdate(task)"
-    >edit</mat-icon
-  >
-  <mat-icon
-    matTooltip="Delete"
-    class="text-danger"
-    (click)="onDelete(task.id ?? '')"
-    >delete</mat-icon
-  >
+  <mat-icon matTooltip="Click to view detail" class="text-info mr-2"
+    (click)="navigateToDetailPage(task)">remove_red_eye</mat-icon>
+  <mat-icon matTooltip="Edit" class="text-warning mr-2" (click)="navigateToUpdate(task)">edit</mat-icon>
+  <mat-icon matTooltip="Delete" class="text-danger" (click)="onDelete(task.id ?? '')">delete</mat-icon>
 </td>
